@@ -130,15 +130,3 @@ enterprise-vlan-vlsm-roas-static/
 └── verifikasi/
     └── ping-test.txt
 ```
-
-## 9. Push ke GitHub
-
-```bash
-cd nama-folder-lab
-git init
-git add .
-git commit -m "Lab: VLSM + VLAN + Trunk + ROAS + Static Routing (3-router topology) - PT Mitra Solusi Teknologi"
-git branch -M main
-git remote add origin https://github.com/sahrulashar/enterprise-vlan-vlsm-roas-static.git
-git push -u origin main
-```
