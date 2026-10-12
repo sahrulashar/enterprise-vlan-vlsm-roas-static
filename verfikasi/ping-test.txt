@@ -1,0 +1,108 @@
+=========================================================
+Bukti Ping Test - Lab VLSM + VLAN + Trunk + ROAS + Static Routing
+PT Mitra Solusi Teknologi
+=========================================================
+
+Dijalankan dari Command Prompt PC di HQ (VLAN Management/IT),
+menguji inter-VLAN routing (via ROAS) dan static routing ke Branch.
+
+---------------------------------------------------------
+Test 1: Ping ke Gateway VLAN Finance (192.168.30.161)
+---------------------------------------------------------
+C:\>ping 192.168.30.161
+
+Pinging 192.168.30.161 with 32 bytes of data:
+Request timed out.
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+
+Ping statistics for 192.168.30.161:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.30.161
+
+Pinging 192.168.30.161 with 32 bytes of data:
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.161: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.161: bytes=32 time=1ms TTL=127
+
+Ping statistics for 192.168.30.161:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+HASIL: BERHASIL (inter-VLAN ke Finance via ROAS jalan)
+
+---------------------------------------------------------
+Test 2: Ping ke Gateway VLAN IT/Networking (192.168.30.65)
+---------------------------------------------------------
+C:\>ping 192.168.30.65
+
+Pinging 192.168.30.65 with 32 bytes of data:
+Request timed out.
+Reply from 192.168.30.65: bytes=32 time=1ms TTL=127
+Reply from 192.168.30.65: bytes=32 time=1ms TTL=127
+Reply from 192.168.30.65: bytes=32 time<1ms TTL=127
+
+Ping statistics for 192.168.30.65:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+HASIL: BERHASIL (inter-VLAN ke IT/Networking via ROAS jalan)
+
+---------------------------------------------------------
+Test 3: Ping ke Gateway VLAN Management (192.168.30.193)
+---------------------------------------------------------
+C:\>ping 192.168.30.193
+
+Pinging 192.168.30.193 with 32 bytes of data:
+Request timed out.
+Reply from 192.168.30.193: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.193: bytes=32 time<1ms TTL=127
+Reply from 192.168.30.193: bytes=32 time<1ms TTL=127
+
+Ping statistics for 192.168.30.193:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+HASIL: BERHASIL (inter-VLAN ke Management via ROAS jalan)
+
+---------------------------------------------------------
+Test 4: Ping ke Branch Palopo (192.168.40.1)
+---------------------------------------------------------
+C:\>ping 192.168.40.1
+
+Pinging 192.168.40.1 with 32 bytes of data:
+Reply from 192.168.40.1: bytes=32 time<1ms TTL=125
+Reply from 192.168.40.1: bytes=32 time<1ms TTL=125
+Reply from 192.168.40.1: bytes=32 time<1ms TTL=125
+Reply from 192.168.40.1: bytes=32 time<1ms TTL=125
+
+Ping statistics for 192.168.40.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+HASIL: BERHASIL (static routing HQ -> INTERNET -> Branch, 2 hop, 0% loss)
+
+=========================================================
+Catatan:
+- "Request timed out" di percobaan pertama tiap tujuan baru
+  itu normal (ARP resolution saat pertama kali menuju host/
+  gateway yang belum ada di ARP cache), bukan indikasi masalah
+  routing/konektivitas.
+- TTL yang berbeda (127 vs 125) menunjukkan jumlah hop yang
+  dilewati: TTL 127 untuk tujuan 1 hop (gateway lokal di HQ,
+  langsung lewat ROAS), TTL 125 untuk tujuan 2 hop (Branch,
+  lewat router INTERNET sebagai transit).
+=========================================================
+
+TODO (belum dites, lengkapi kalau sempat):
+- [ ] Ping PC-ke-PC langsung antar VLAN (bukan cuma ke gateway)
+- [ ] Ping dari PC di Branch ke PC di HQ (arah sebaliknya)
