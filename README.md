@@ -13,25 +13,7 @@ PT Mitra Solusi Teknologi punya kantor pusat (**HQ**) di **Makassar** dan kantor
 
 ## 2. Topologi
 
-```mermaid
-graph LR
-    subgraph HQ["HQ - Makassar (192.168.30.0/24)"]
-        PCm[PC Management<br/>VLAN 10] --- SW0[Switch0]
-        PCf[PC Finance<br/>VLAN 20] --- SW0
-        SW0 ==Trunk== SW4[Switch4]
-        PCit[PC IT/Networking<br/>VLAN 30] --- SW4
-        PCmk[PC Marketing<br/>VLAN 40] --- SW4
-        SW4 ==Trunk dot1Q<br/>10,20,30,40==> R1[R1 - HQ<br/>Router-on-a-Stick]
-    end
-
-    R1 ---|"20.0.0.0/30"| R3[INTERNET<br/>Router Transit]
-    R3 ---|"10.0.0.0/30"| R2[R2 - Branch]
-
-    subgraph Branch["Branch - Palopo"]
-        R2 --- SW2[Switch2]
-        SW2 --- PCs["PC9-PC18<br/>192.168.40.0/27"]
-    end
-```
+![Topologi Lab](images/topologi.png)
 
 - **R1** = router HQ, ROAS (subinterface per VLAN)
 - **INTERNET** = router transit, murni routing, tidak ada VLAN/host di belakangnya
@@ -136,13 +118,15 @@ Output mentah (apa adanya dari Command Prompt PC, bukan ringkasan) ada di [`veri
 enterprise-vlan-vlsm-roas-static/
 ├── README.md
 ├── topologi.pkt
-└── configs/
-    ├── r1-hq.cfg
-    ├── internet-transit.cfg
-    ├── r2-branch.cfg
-    ├── sw1-hq.cfg
-    ├── sw2-hq.cfg
-    └── sw1-branch-palopo.cfg
+├── images/
+│   └── topologi.png
+├── configs/
+│   ├── r1-hq.cfg
+│   ├── internet-transit.cfg
+│   ├── r2-branch.cfg
+│   ├── sw1-hq.cfg
+│   ├── sw2-hq.cfg
+│   └── sw1-branch-palopo.cfg
 └── verifikasi/
     └── ping-test.txt
 ```
